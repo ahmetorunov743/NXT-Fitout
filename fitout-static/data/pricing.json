@@ -1,0 +1,11 @@
+[
+  { "id": "m-floor-polish", "category": "marble", "object": "floor", "task": "polishing", "unit": "sqm", "pricePerUnit": 45, "isMaxEstimate": false, "labels": { "en": "Marble floor — polishing", "ru": "Мраморный пол — полировка" } },
+  { "id": "m-floor-crack", "category": "marble", "object": "floor", "task": "crack_repair", "unit": "sqm", "pricePerUnit": 90, "isMaxEstimate": false, "labels": { "en": "Marble floor — crack/chip repair", "ru": "Мраморный пол — удаление сколов" } },
+  { "id": "m-stairs-full", "category": "marble", "object": "stairs", "task": "full_restoration", "unit": "linear_m", "pricePerUnit": 120, "isMaxEstimate": false, "labels": { "en": "Stairs — full restoration", "ru": "Ступени — полная реставрация" } },
+  { "id": "w-floor-oil", "category": "wood", "object": "floor", "task": "oil_coating", "unit": "sqm", "pricePerUnit": 55, "isMaxEstimate": false, "labels": { "en": "Wood floor — oiling/lacquer", "ru": "Паркет — нанесение масла/лака" } },
+  { "id": "w-doors-scratch", "category": "wood", "object": "doors", "task": "scratch_repair", "unit": "piece", "pricePerUnit": 250, "isMaxEstimate": false, "labels": { "en": "Doors — scratch/dent repair", "ru": "Двери — устранение царапин/вмятин" } },
+  { "id": "me-metal-polish", "category": "metal", "object": "decor", "task": "polishing", "unit": "linear_m", "pricePerUnit": 70, "isMaxEstimate": false, "labels": { "en": "Metal — polishing", "ru": "Металл — полировка" } },
+  { "id": "f-apartment", "category": "fitout", "object": "apartment", "task": "full_fitout", "unit": "sqm", "pricePerUnit": 380, "isMaxEstimate": true, "labels": { "en": "Apartment — full fitout (max estimate)", "ru": "Квартира — полный фитаут (максимальная оценка)" } },
+  { "id": "f-villa", "category": "fitout", "object": "villa", "task": "full_fitout", "unit": "sqm", "pricePerUnit": 420, "isMaxEstimate": true, "labels": { "en": "Villa — full fitout (max estimate)", "ru": "Вилла — полный фитаут (максимальная оценка)" } },
+  { "id": "f-office", "category": "fitout", "object": "office", "task": "full_fitout", "unit": "sqm", "pricePerUnit": 350, "isMaxEstimate": true, "labels": { "en": "Office — fitout (max estimate)", "ru": "Офис — фитаут (максимальная оценка)" } }
+]
