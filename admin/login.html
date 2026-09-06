@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin sign in — NXT Fitout Technical Service</title>
+<link rel="stylesheet" href="../css/styles.css">
+</head>
+<body class="admin-body">
+<div class="login-screen">
+  <form class="login-card" id="login-form">
+    <div class="logo-lockup on-dark" style="margin-bottom:20px;">
+      <span class="logo-mark">NXT<svg class="logo-bracket" viewBox="0 0 40 56" aria-hidden="true"><path d="M14 4 H36 M36 4 V52 M24 52 H36" fill="none" stroke="#B08D57" stroke-width="3" stroke-linecap="square"/></svg></span>
+      <span class="logo-tagline">Fitout Technical Service</span>
+    </div>
+    <h1>Admin sign in</h1>
+    <p class="hint">Demo login only — see README before going to production. Default: admin / change-me</p>
+    <div class="field">
+      <input type="text" id="username" placeholder="Username" autocomplete="username">
+    </div>
+    <div class="field">
+      <input type="password" id="password" placeholder="Password" autocomplete="current-password">
+    </div>
+    <p class="login-error" id="login-error" style="display:none;">Invalid username or password</p>
+    <button type="submit" class="btn btn-primary">Sign in</button>
+  </form>
+</div>
+
+<script src="../js/store.js"></script>
+<script>
+  document.getElementById('login-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const u = document.getElementById('username').value;
+    const p = document.getElementById('password').value;
+    if (Store.login(u, p)) {
+      window.location.href = 'leads.html';
+    } else {
+      document.getElementById('login-error').style.display = 'block';
+    }
+  });
+</script>
+</body>
+</html>
