@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cases Manager — Admin — Stonecraft Dubai</title>
+<link rel="stylesheet" href="../css/styles.css">
+</head>
+<body class="admin-body">
+<div class="admin-shell">
+  <aside class="admin-sidebar">
+    <a href="leads.html" class="logo">Admin</a>
+    <nav class="admin-nav">
+      <a href="leads.html">📥 Leads / CRM</a>
+      <a href="cases-manager.html" class="active">🖼 Cases</a>
+      <a href="calculator-edit.html">🧮 Calculator</a>
+    </nav>
+    <button class="admin-logout" id="logout-btn">↩ Log out</button>
+  </aside>
+  <main class="admin-main">
+    <h1>Portfolio manager</h1>
+    <p class="small-note">Publish a new case study to the public cases page.</p>
+    <div class="notice">
+      Cases added here are saved locally in this browser only. To publish a case for
+      every visitor, edit <code>data/cases.json</code> directly and upload it to GitHub
+      (see README) — that's the source every visitor's browser reads.
+    </div>
+
+    <div class="admin-form-grid">
+      <div class="field"><label>Project title</label><input id="f-title" type="text"></div>
+      <div class="field">
+        <label>Category</label>
+        <select id="f-category">
+          <option value="marble">Marble</option>
+          <option value="wood">Wood</option>
+          <option value="metal">Metal</option>
+          <option value="fitout">Fitout</option>
+        </select>
+      </div>
+      <div class="field"><label>Location in Dubai</label><input id="f-location" type="text"></div>
+      <div class="field"><label>Volume of work (e.g. 120 m²)</label><input id="f-volume" type="text"></div>
+      <div class="field"><label>Duration (days)</label><input id="f-duration" type="number" value="1"></div>
+      <div></div>
+      <div class="field full">
+        <label>Process description / master's comment</label>
+        <textarea id="f-comment" rows="3"></textarea>
+      </div>
+      <div class="field"><label>Before photo</label><input id="f-before" type="file" accept="image/*"></div>
+      <div class="field"><label>After photo</label><input id="f-after" type="file" accept="image/*"></div>
+      <div class="field full">
+        <label>Video (MP4/WebM, optional)</label>
+        <input id="f-video" type="file" accept="video/*">
+        <p class="small-note">Files stay on your device in this demo — no server to upload to (see README).</p>
+      </div>
+      <label class="full" style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--slate);">
+        <input id="f-published" type="checkbox"> Publish on site
+      </label>
+      <div class="full">
+        <button class="btn btn-primary" id="save-btn">Save case</button>
+      </div>
+    </div>
+
+    <h2 style="margin-top:40px;font-size:18px;">Existing local cases</h2>
+    <div id="local-cases" style="margin-top:16px;display:flex;flex-direction:column;gap:8px;"></div>
+  </main>
+</div>
+
+<script src="../js/store.js"></script>
+<script>
+  Store.requireAuth();
+  document.getElementById('logout-btn').addEventListener('click', () => {
+    Store.logout();
+    window.location.href = 'login.html';
+  });
+
+  function readAsDataURL(file) {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.readAsDataURL(file);
+    });
+  }
+
+  document.getElementById('save-btn').addEventListener('click', async () => {
+    const beforeFile = document.getElementById('f-before').files[0];
+    const afterFile = document.getElementById('f-after').files[0];
+    const videoFile = document.getElementById('f-video').files[0];
+
+    const item = {
+      title: document.getElementById('f-title').value,
+      category: document.getElementById('f-category').value,
+      location: document.getElementById('f-location').value,
+      volume: document.getElementById('f-volume').value,
+      durationDays: Number(document.getElementById('f-duration').value) || 1,
+      masterComment: document.getElementById('f-comment').value,
+      beforeImage: beforeFile ? await readAsDataURL(beforeFile) : '../assets/uploads/placeholder-before.jpg',
+      afterImage: afterFile ? await readAsDataURL(afterFile) : '../assets/uploads/placeholder-after.jpg',
+      video: videoFile ? await readAsDataURL(videoFile) : '',
+      published: document.getElementById('f-published').checked,
+    };
+
+    if (!item.title) return;
+    Store.addCustomCase(item);
+    renderLocalCases();
+    document.querySelectorAll('.admin-form-grid input, .admin-form-grid textarea').forEach((el) => {
+      if (el.type === 'checkbox') el.checked = false; else el.value = '';
+    });
+  });
+
+  function renderLocalCases() {
+    const list = Store.getCustomCases();
+    const container = document.getElementById('local-cases');
+    container.innerHTML = list.map((c) => `
+      <div style="display:flex;align-items:center;justify-content:space-between;border:1px solid rgba(21,20,15,0.1);background:rgba(255,255,255,0.5);border-radius:3px;padding:12px;font-size:14px;">
+        <div><strong>${c.title}</strong> <span style="font-size:12px;color:var(--slate);">(${c.category} · ${c.location})</span></div>
+        <span class="badge ${c.published ? 'published' : 'draft'}">${c.published ? 'Published' : 'Draft'}</span>
+      </div>
+    `).join('') || '<p style="font-size:14px;color:var(--slate);">No local cases yet.</p>';
+  }
+
+  renderLocalCases();
+</script>
+</body>
+</html>
